@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Instagram</string>
+    <string name="home">Home</string>
+    <string name="image">Image</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="create_account">Create account</string>
+    <string name="username">Username</string>
+
+</resources>
