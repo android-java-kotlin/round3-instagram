@@ -1,6 +1,7 @@
 package com.m7amdelbana.instagram.view.addPost;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -14,6 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -24,12 +28,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.m7amdelbana.instagram.R;
+import com.m7amdelbana.instagram.models.Post;
+import com.m7amdelbana.instagram.models.User;
+import com.m7amdelbana.instagram.view.auth.register.RegisterActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -40,9 +59,15 @@ public class AddPostFragment extends Fragment implements View.OnClickListener {
     private EditText edtTitle;
 
     private Bitmap selectedImage;
+    private Uri imageUri;
 
     private static final int GALLERY_PICK = 100;
     private static final int GALLERY_PERMISSION = 200;
+
+    private StorageReference mStorageRef;
+    private FirebaseAuth mAuth;
+
+    private NavController navController;
 
     public AddPostFragment() {
 
@@ -58,6 +83,7 @@ public class AddPostFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
         checkAccessImagesPermission();
     }
 
@@ -66,11 +92,59 @@ public class AddPostFragment extends Fragment implements View.OnClickListener {
         btnNext = view.findViewById(R.id.addPost_button);
         edtTitle = view.findViewById(R.id.addPost_title_editText);
         btnNext.setOnClickListener(this);
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
     public void onClick(View v) {
+        // TODO: Add Post
+        savePost();
+    }
 
+    private void savePost() {
+        final String title = edtTitle.getText().toString();
+        final String imagePath = UUID.randomUUID().toString() + ".jpg";
+
+        mStorageRef.child("postImages").child(imagePath).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                mStorageRef.child("postImages").child(imagePath).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String imageURL = uri.toString();
+
+                        Post post = new Post();
+                        post.setImage(imageURL);
+                        post.setTitle(title);
+
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        post.setUserId(currentUser.getUid());
+                        post.setDate(getCurrentDate());
+
+                        savePostToDB(post);
+                    }
+                });
+            }
+        });
+    }
+
+    private String getCurrentDate() {
+        Date date = Calendar.getInstance().getTime();
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        return simpleDateFormat.format(date);
+    }
+
+    private void savePostToDB(Post post) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Posts");
+        String id = myRef.push().getKey();
+        myRef.child(id).setValue(post);
+        Toast.makeText(getActivity(), "Post added!", Toast.LENGTH_SHORT).show();
+
+        navController.popBackStack();
     }
 
     private void checkAccessImagesPermission() {
@@ -104,7 +178,7 @@ public class AddPostFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             try {
-                Uri imageUri = data.getData();
+                imageUri = data.getData();
                 assert imageUri != null;
                 InputStream imageStream = Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(imageUri);
                 selectedImage = BitmapFactory.decodeStream(imageStream);

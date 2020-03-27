@@ -8,6 +8,7 @@ public class Post implements Serializable {
     private String title;
     private String image;
     private String date;
+    private String userId;
     private User user;
 
     public String getId() {
@@ -40,6 +41,14 @@ public class Post implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public User getUser() {

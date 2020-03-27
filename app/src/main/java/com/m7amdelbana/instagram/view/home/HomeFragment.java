@@ -40,22 +40,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void getPosts() {
-        User user = new User();
-        user.setName("Mohamed Elbana");
-        user.setImage("https://s.alicdn.com/@sc01/kf/H759ef84a03c54347b78a3d435cca2abeP.png_220x220.png");
 
-        Post post = new Post();
-        post.setTitle("This is image");
-        post.setDate("8:30 PM 27-3-2020");
-        post.setImage("https://s.alicdn.com/@sc01/kf/HTB1CXigX9WD3KVjSZSgq6ACxVXaS.jpg_220x220.jpg");
-        post.setUser(user);
-
-        ArrayList<Post> posts = new ArrayList<>();
-        posts.add(post);
-        posts.add(post);
-
-        postAdapter = new PostAdapter(posts);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(postAdapter);
     }
 }
