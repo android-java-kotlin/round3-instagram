@@ -8,5 +8,12 @@
     <string name="log_in">Log in</string>
     <string name="create_account">Create account</string>
     <string name="username">Username</string>
+    <string name="permission_denied">Permission denied!</string>
+    <string name="next">Next</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="you_havent_picked_image">You haven\'t picked image.</string>
+    <string name="add_post">Add post</string>
+    <string name="post">Post</string>
+    <string name="write_anything">Write anything...</string>
 
 </resources>

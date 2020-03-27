@@ -11,4 +11,10 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home"/>
 
+    <fragment
+        android:id="@+id/addPostFragment"
+        android:name="com.m7amdelbana.instagram.view.addPost.AddPostFragment"
+        android:label="fragment_add_post"
+        tools:layout="@layout/fragment_add_post" />
+
 </navigation>
