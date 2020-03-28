@@ -39,6 +39,7 @@ import com.google.firebase.storage.UploadTask;
 import com.m7amdelbana.instagram.R;
 import com.m7amdelbana.instagram.models.Post;
 import com.m7amdelbana.instagram.models.User;
+import com.m7amdelbana.instagram.utils.Utilities;
 import com.m7amdelbana.instagram.view.auth.register.RegisterActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -121,7 +122,7 @@ public class AddPostFragment extends Fragment implements View.OnClickListener {
 
                         FirebaseUser currentUser = mAuth.getCurrentUser();
                         post.setUserId(currentUser.getUid());
-                        post.setDate(getCurrentDate());
+                        post.setDate(Utilities.getCurrentDate());
 
                         savePostToDB(post);
                     }
@@ -130,12 +131,7 @@ public class AddPostFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private String getCurrentDate() {
-        Date date = Calendar.getInstance().getTime();
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        return simpleDateFormat.format(date);
-    }
+
 
     private void savePostToDB(Post post) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();

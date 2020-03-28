@@ -66,6 +66,32 @@
         app:layout_constraintTop_toBottomOf="@id/post_account_cardView"
         app:srcCompat="@drawable/img_placeholder" />
 
+    <ImageView
+        android:id="@+id/post_like_imageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_thumb_up_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/post_imageView" />
+
+    <TextView
+        android:id="@+id/post_numberOfLikes_textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/post_like_imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/post_like_imageView"
+        app:layout_constraintTop_toTopOf="@+id/post_like_imageView" />
+
     <TextView
         android:id="@+id/post_title_textView"
         android:layout_width="0dp"
@@ -79,7 +105,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/post_imageView" />
+        app:layout_constraintTop_toBottomOf="@id/post_like_imageView" />
 
     <TextView
         android:id="@+id/post_date_textView"

@@ -10,6 +10,7 @@ public class Post implements Serializable {
     private String date;
     private String userId;
     private User user;
+    private int numberOfLikes;
 
     public String getId() {
         return id;
@@ -57,5 +58,13 @@ public class Post implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getNumberOfLikes() {
+        return numberOfLikes;
+    }
+
+    public void setNumberOfLikes(int numberOfLikes) {
+        this.numberOfLikes = numberOfLikes;
     }
 }

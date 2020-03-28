@@ -19,6 +19,9 @@ public class PostHolder extends RecyclerView.ViewHolder {
     private TextView tvTitle;
     private TextView tvDate;
 
+    public ImageView imgLike;
+    private TextView tvNumberOfLikes;
+
     public PostHolder(@NonNull View itemView) {
         super(itemView);
         initView();
@@ -30,13 +33,16 @@ public class PostHolder extends RecyclerView.ViewHolder {
         imgPost = itemView.findViewById(R.id.post_imageView);
         tvTitle = itemView.findViewById(R.id.post_title_textView);
         tvDate = itemView.findViewById(R.id.post_date_textView);
+
+        imgLike = itemView.findViewById(R.id.post_like_imageView);
+        tvNumberOfLikes = itemView.findViewById(R.id.post_numberOfLikes_textView);
     }
 
     void bindView(Post post) {
-        Picasso.get()
-                .load(post.getUser().getImage())
-                .placeholder(R.drawable.img_placeholder)
-                .into(imgAccount);
+//        Picasso.get()
+//                .load(post.getUser().getImage())
+//                .placeholder(R.drawable.img_placeholder)
+//                .into(imgAccount);
 
         Picasso.get()
                 .load(post.getImage())
@@ -46,5 +52,8 @@ public class PostHolder extends RecyclerView.ViewHolder {
         tvName.setText(post.getUser().getName());
         tvTitle.setText(post.getTitle());
         tvDate.setText(post.getDate());
+
+        String likes = post.getNumberOfLikes() + " Persons";
+        tvNumberOfLikes.setText(likes);
     }
 }

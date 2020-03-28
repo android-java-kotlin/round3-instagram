@@ -10,5 +10,10 @@
         android:id="@+id/addPostFragment"
         android:icon="@drawable/ic_nav_add"
         android:title="@string/add_post" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_nav_profile"
+        android:title="@string/profile" />
 </menu>
 

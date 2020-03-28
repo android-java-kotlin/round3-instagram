@@ -16,5 +16,10 @@
         android:name="com.m7amdelbana.instagram.view.addPost.AddPostFragment"
         android:label="fragment_add_post"
         tools:layout="@layout/fragment_add_post" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.m7amdelbana.instagram.view.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 
 </navigation>

@@ -15,5 +15,6 @@
     <string name="add_post">Add post</string>
     <string name="post">Post</string>
     <string name="write_anything">Write anything...</string>
-
+    <string name="log_out">Log out</string>
+    <string name="profile">Profile</string>
 </resources>
